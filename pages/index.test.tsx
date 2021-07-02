@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Blog from './Blog';
+import Home from './Home';
 
-describe('Blog', () => {
+describe('Home', () => {
   it('renders component name', () => {
-    const { getByText } = render(<Blog />);
+    const { getByText } = render(<Home />);
 
     expect(getByText('Blog')).toBeInTheDocument();
   });
