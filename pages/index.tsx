@@ -4,9 +4,11 @@ import path from 'path';
 import Head from 'next/head';
 import matter from 'gray-matter';
 
+import Posts from '@/components/Posts';
+
 import { GetStaticProps } from 'next';
 
-type Props = {
+export type Props = {
   posts: {
     slug: string;
     frontmatter: {
@@ -24,12 +26,7 @@ export default function Home({ posts }: Props) {
       <Head>
         <title>Dev Blog</title>
       </Head>
-      <ul>
-        {posts &&
-          posts.map((post) => (
-            <li key={post.slug}>{post.frontmatter.title}</li>
-          ))}
-      </ul>
+      <Posts posts={posts}/>
     </div>
   );
 }
