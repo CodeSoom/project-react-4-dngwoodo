@@ -26,7 +26,7 @@ export default function Home({ posts }: Props) {
       <Head>
         <title>Dev Blog</title>
       </Head>
-      <Posts posts={posts}/>
+      <Posts posts={posts} />
     </div>
   );
 }
