@@ -2,7 +2,7 @@
 title: 'Tailwind vs. Bootstrap'
 date: 'March 5, 2021'
 excerpt: 'Both Tailwind and Bootstrap are very popular CSS frameworks. In this article, we will compare them'
-cover_image: '/images/posts/img2.jpg'
+coverImage: '/images/posts/img2.jpg'
 ---
 
 Lorem markdownum fine incustoditam unda factura versum occuluere Aeneas, iuvat
