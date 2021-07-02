@@ -1,6 +1,10 @@
+import PostType from '@/types/PostType';
+
 import Post from '@/components/Post';
 
-import { Props } from '@/pages/index';
+type Props = {
+  posts: PostType[];
+};
 
 export default function Posts({ posts }: Props) {
   return (

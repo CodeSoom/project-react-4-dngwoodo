@@ -1,15 +1,9 @@
+import PostType from '@/types/PostType';
+
 import Link from 'next/link';
 
 export type Props = {
-  post: {
-    slug: string;
-    frontmatter: {
-      title: string;
-      date: string;
-      excerpt: string;
-      coverImage: string;
-    };
-  };
+  post: PostType;
 };
 
 export default function Post({ post }: Props) {

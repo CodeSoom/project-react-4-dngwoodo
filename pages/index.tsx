@@ -4,20 +4,13 @@ import path from 'path';
 import Head from 'next/head';
 import matter from 'gray-matter';
 
-import Posts from '@/components/Posts';
-
+import PostType from '@/types/PostType';
 import { GetStaticProps } from 'next';
 
+import Posts from '@/components/Posts';
+
 export type Props = {
-  posts: {
-    slug: string;
-    frontmatter: {
-      title: string;
-      date: string;
-      excerpt: string;
-      coverImage: string;
-    };
-  }[];
+  posts: PostType[];
 };
 
 export default function Home({ posts }: Props) {
