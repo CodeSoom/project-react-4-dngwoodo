@@ -8,6 +8,7 @@
       "@/utils/*": ["utils/*"],
       "@/hooks/*": ["hooks/*"],
       "@/types/*": ["types/*"],
+      "@/fixtures/*": ["fixtures/*"],
     },
     "target": "es5",
     "lib": [
