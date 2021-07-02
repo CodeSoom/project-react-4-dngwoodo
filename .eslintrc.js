@@ -22,7 +22,10 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
-      node: { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+      alias: {
+        map: [['@', '.']],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
     },
   },
   plugins: ['react', '@typescript-eslint'],
