@@ -5,17 +5,17 @@ exports.returnAction = (path) => {
     return [
 		{
 			type: 'add',
-			path: `${path}/{{ pascalCase name }}/index.jsx`,
+			path: `${path}/{{ pascalCase name }}/index.tsx`,
 			templateFile: 'plop-templates/component/index.hbs'
 		},
 		{
 			type: 'add',
-			path: `${path}/{{ pascalCase name }}/index.test.jsx`,
+			path: `${path}/{{ pascalCase name }}/index.test.tsx`,
 			templateFile: 'plop-templates/component/index.test.hbs'
 		},
 		{
 			type: 'add',
-			path: `${path}/{{ pascalCase name }}/{{ pascalCase name }}.jsx`,
+			path: `${path}/{{ pascalCase name }}/{{ pascalCase name }}.tsx`,
 			templateFile: 'plop-templates/component/component.hbs'
 		}
 	]
