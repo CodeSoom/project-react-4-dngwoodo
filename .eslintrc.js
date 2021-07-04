@@ -9,6 +9,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'airbnb/hooks',
     'airbnb',
+    'plugin:@next/next/recommended',
     'plugin:prettier/recommended',
     'prettier',
   ],
