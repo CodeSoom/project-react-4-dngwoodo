@@ -34,5 +34,5 @@ yarn-error.log*
 .vercel
 
 # plop
-plopfile.js
-plop-temolates
+/plopfile.js
+/plop-templates
