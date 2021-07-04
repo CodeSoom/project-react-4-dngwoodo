@@ -13,7 +13,7 @@ export default function Post({ post }: Props) {
   } = post;
 
   return (
-    <li key={slug}>
+    <li>
       <img src={coverImage} alt='' />
       <div>Posted on {date}</div>
       <h3>{title}</h3>
