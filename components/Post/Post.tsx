@@ -1,5 +1,6 @@
 import PostType from '@/types/PostType';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
 export type Props = {
@@ -14,7 +15,7 @@ export default function Post({ post }: Props) {
 
   return (
     <li>
-      <img src={coverImage} alt='' />
+      <Image src={coverImage} alt='thumbnail' width={500} height={500} />
       <div>Posted on {date}</div>
       <h3>{title}</h3>
       <p>{excerpt}</p>
