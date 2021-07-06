@@ -33,10 +33,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # 소문자로 변경
-      - id: string
-        uses: ASzc/change-string-case-action@v1
-        with:
-          string: ${{ GITHUB_REPOSITORY }}
+      # - name: Set environment variables
+      #   run: |
+      #     echo IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
 
       # 가상 호스트에 코드 복사
       - name: Checkout
@@ -56,26 +55,26 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
 
-      # 도커 이미지 생성 후 Github Container Registry에 저장
-      - name: Build and Push Docker Images
-        run: |
-          echo ghcr.io/${{ steps.string.outputs.lowercase }}:$GITHUB_SHA
-          docker build -t ghcr.io/${{ steps.string.outputs.lowercase }}:$GITHUB_SHA .
-          docker push ghcr.io/${{ steps.string.outputs.lowercase }}:$GITHUB_SHA
+      # # 도커 이미지 생성 후 Github Container Registry에 저장
+      # - name: Build and Push Docker Images
+      #   run: |
+      #     echo ghcr.io/${{ env.IMAGE_REPOSITORY }}:$GITHUB_SHA
+      #     docker build -t ghcr.io/${{ env.IMAGE_REPOSITORY }}:$GITHUB_SHA .
+      #     docker push ghcr.io/${{ env.IMAGE_REPOSITORY }}:$GITHUB_SHA
 
-      # AWS에 배포하기   
-      - name: Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ec2-18-118-156-189.us-east-2.compute.amazonaws.com
-          username: ec2-user
-          key: ${{ secrets.AWS_PRIVATE_KEY }}
-          envs: GITHUB_SHA, GITHUB_REPOSITORY
-          script: |
-            echo ghcr.io/${{ steps.string.outputs.lowercase }}:$GITHUB_SHA
-            docker pull ghcr.io/${{ steps.string.outputs.lowercase }}:$GITHUB_SHA
-            docker tag ghcr.io/${{ steps.string.outputs.lowercase }}:$GITHUB_SHA dngwoodo-blog
-            docker stop server
-            docker run --rm -d -p 80:3000 --name server dngwoodo-blog
+      # # AWS에 배포하기   
+      # - name: Deploy
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ec2-18-118-156-189.us-east-2.compute.amazonaws.com
+      #     username: ec2-user
+      #     key: ${{ secrets.AWS_PRIVATE_KEY }}
+      #     envs: GITHUB_SHA, GITHUB_REPOSITORY
+      #     script: |
+      #       echo ghcr.io/${{ env.IMAGE_REPOSITORY }}:$GITHUB_SHA
+      #       docker pull ghcr.io/${{ env.IMAGE_REPOSITORY }}:$GITHUB_SHA
+      #       docker tag ghcr.io/${{ env.IMAGE_REPOSITORY }}:$GITHUB_SHA dngwoodo-blog
+      #       docker stop server
+      #       docker run --rm -d -p 80:3000 --name server dngwoodo-blog
 
 
