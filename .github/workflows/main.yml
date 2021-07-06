@@ -32,6 +32,12 @@ jobs:
     needs: next-build
     runs-on: ubuntu-latest
     steps:
+      # 소문자로 변경
+      - id: string
+        uses: ASzc/change-string-case-action@v1
+        with:
+          string: ${{ GITHUB_REPOSITORY }}
+
       # 가상 호스트에 코드 복사
       - name: Checkout
         uses: actions/checkout@v2
@@ -53,9 +59,9 @@ jobs:
       # 도커 이미지 생성 후 Github Container Registry에 저장
       - name: Build and Push Docker Images
         run: |
-          echo ghcr.io/$GITHUB_REPOSITORY:$GITHUB_SHA
-          docker build -t ghcr.io/$GITHUB_REPOSITORY:$GITHUB_SHA .
-          docker push ghcr.io/$GITHUB_REPOSITORY:$GITHUB_SHA
+          echo ghcr.io/${{ steps.string.outputs.lowercase }}:$GITHUB_SHA
+          docker build -t ghcr.io/${{ steps.string.outputs.lowercase }}:$GITHUB_SHA .
+          docker push ghcr.io/${{ steps.string.outputs.lowercase }}:$GITHUB_SHA
 
       # AWS에 배포하기   
       - name: Deploy
@@ -66,9 +72,9 @@ jobs:
           key: ${{ secrets.AWS_PRIVATE_KEY }}
           envs: GITHUB_SHA, GITHUB_REPOSITORY
           script: |
-            echo ghcr.io/$GITHUB_REPOSITORY:$GITHUB_SHA
-            docker pull ghcr.io/$GITHUB_REPOSITORY:$GITHUB_SHA
-            docker tag ghcr.io/$GITHUB_REPOSITORY:$GITHUB_SHA dngwoodo-blog
+            echo ghcr.io/${{ steps.string.outputs.lowercase }}:$GITHUB_SHA
+            docker pull ghcr.io/${{ steps.string.outputs.lowercase }}:$GITHUB_SHA
+            docker tag ghcr.io/${{ steps.string.outputs.lowercase }}:$GITHUB_SHA dngwoodo-blog
             docker stop server
             docker run --rm -d -p 80:3000 --name server dngwoodo-blog
 
