@@ -33,9 +33,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # 소문자로 변경
-      - id: read-docker-image-identifiers
-        name: Read Docker Image Identifiers
-        run: echo ::set-env name=IMAGE_REPOSITORY::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+      - name: Set environment variables
+        run: |
+          echo IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
 
       # 가상 호스트에 코드 복사
       - name: Checkout
