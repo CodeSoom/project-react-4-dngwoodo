@@ -17,6 +17,7 @@ jobs:
       - run: npm ci
       - run: npm run build
         # env:
+
       # artifact에 파일 업로드
       - name: Upload Next build
         uses: actions/upload-artifact@v2
@@ -27,16 +28,22 @@ jobs:
             public
           retention-days: 7 # 최대 30일 저장 가능
 
+      # lint
+      - name: Run Lint
+        run: npm run lint
+        
+      # test
+      - name: Run Test
+        run: npm run test
+
   next-deploy:
+    # main 브랜치일 때 실행
+    if: ${{ github.ref == 'refs/heads/main' }}
+
     # next-build artifact가 있어야 실행
     needs: next-build
     runs-on: ubuntu-latest
     steps:
-      # 소문자로 변경
-      - name: Set environment variables
-        run: |
-          echo IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
-
       # 가상 호스트에 코드 복사
       - name: Checkout
         uses: actions/checkout@v2
@@ -46,36 +53,31 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build
-
-      # Github Container Registry에 로그인
-      - name: Login to GitHub Container Registry
+          
+      # Docker Hub 로그인
+      - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.CR_PAT }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 도커 이미지 생성 후 Github Container Registry에 저장
+      # 도커 빌드 및 도커 허브에 이미지 올리기
       - name: Build and Push Docker Images
         run: |
-          echo ghcr.io/${{ env.IMAGE_REPOSITORY }}:$GITHUB_SHA
-          docker build -t ghcr.io/${{ env.IMAGE_REPOSITORY }}:$GITHUB_SHA .
-          docker push ghcr.io/${{ env.IMAGE_REPOSITORY }}:$GITHUB_SHA
+          docker build -t blog .
+          docker tag blog dngwoodo/blog:${GITHUB_SHA:7}
+          docker push dngwoodo/blog:${GITHUB_SHA:7}
 
-      # AWS에 배포하기   
+      # AWS에 배포하기
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
-          host: ec2-18-118-156-189.us-east-2.compute.amazonaws.com
+          host: ec2-3-21-97-153.us-east-2.compute.amazonaws.com
           username: ec2-user
-          key: ${{ secrets.AWS_PRIVATE_KEY }}
-          envs: GITHUB_SHA, GITHUB_ENV
+          key: ${{ secrets.PRIVATE_KEY }}
+          envs: GITHUB_SHA
           script: |
-            echo IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
-            echo ghcr.io/${{ env.IMAGE_REPOSITORY }}:$GITHUB_SHA
-            docker pull ghcr.io/${{ env.IMAGE_REPOSITORY }}:$GITHUB_SHA
-            docker tag ghcr.io/${{ env.IMAGE_REPOSITORY }}:$GITHUB_SHA dngwoodo-blog
+            docker pull dngwoodo/blog:${GITHUB_SHA:7}
+            docker tag dngwoodo/blog:${GITHUB_SHA:7} blog
             docker stop server
-            docker run --rm -d -p 80:3000 --name server dngwoodo-blog
-
-
+            docker run --rm -d -p 3000:3000 --name server blog
