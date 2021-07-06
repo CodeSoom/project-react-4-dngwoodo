@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 
 import POSTS from '@/fixtures/posts';
 
-import Home from '.';
+import Home from './index.page';
 
 describe('Home', () => {
   it('renders post titles', () => {

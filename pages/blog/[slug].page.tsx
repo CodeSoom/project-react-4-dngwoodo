@@ -3,6 +3,7 @@ import path from 'path';
 
 import matter from 'gray-matter';
 import marked from 'marked';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import PostType from '@/types/PostType';
@@ -21,8 +22,9 @@ export default function PostPage({ frontmatter, content }: Props) {
       <div>
         <h1>{title}</h1>
         <div>Posted on {date}</div>
-        <img src={coverImage} alt='' />
+        <Image src={coverImage} alt='' width={500} height={500} />
         <div>
+          {/* eslint-disable-next-line react/no-danger */}
           <div dangerouslySetInnerHTML={{ __html: marked(content) }} />
         </div>
       </div>
