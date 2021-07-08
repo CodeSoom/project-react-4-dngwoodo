@@ -12,12 +12,11 @@ describe('Posts', () => {
       getByRole('heading', { name: 'Writing Great Unit Tests' })
     ).toBeInTheDocument();
     expect(container).toContainHTML('<img');
-    expect(getByText('Posted on March 12, 2021')).toBeInTheDocument();
+    expect(getByText('March 12, 2021')).toBeInTheDocument();
     expect(
       getByText(
         'We will look at 10 simple tips and tricks on writing unit tests in JavaScript'
       )
     ).toBeInTheDocument();
-    expect(getByRole('link', { name: 'Read More' })).toBeInTheDocument();
   });
 });
