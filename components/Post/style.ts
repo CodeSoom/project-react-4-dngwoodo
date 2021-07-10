@@ -15,7 +15,7 @@ const fadeIn = keyframes({
 export const Container = styled.li(
   mediaquery({
     width: ['100%', 'calc(50% - 10px)'],
-    '&:nth-child(odd)': {
+    '&:nth-of-type(odd)': {
       marginRight: ['0', '20px'],
     },
   })
