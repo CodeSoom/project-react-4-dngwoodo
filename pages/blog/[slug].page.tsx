@@ -2,12 +2,11 @@ import fs from 'fs';
 import path from 'path';
 
 import matter from 'gray-matter';
-import marked from 'marked';
-import Image from 'next/image';
-import Link from 'next/link';
 
 import PostType from '@/types/PostType';
 import { GetStaticPaths, GetStaticProps } from 'next';
+
+import PostDetail from '@/components/PostDetail';
 
 type Props = PostType & { content: string };
 
@@ -15,20 +14,12 @@ export default function PostPage({ frontmatter, content }: Props) {
   const { title, date, coverImage } = frontmatter;
 
   return (
-    <>
-      <Link href='/'>
-        <a href='replace'>Go Back</a>
-      </Link>
-      <div>
-        <h1>{title}</h1>
-        <div>Posted on {date}</div>
-        <Image src={coverImage} alt='' width={500} height={500} />
-        <div>
-          {/* eslint-disable-next-line react/no-danger */}
-          <div dangerouslySetInnerHTML={{ __html: marked(content) }} />
-        </div>
-      </div>
-    </>
+    <PostDetail
+      title={title}
+      date={date}
+      coverImage={coverImage}
+      content={content}
+    />
   );
 }
 

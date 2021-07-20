@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import PostType from '@/types/PostType';
 
-import mediaquey from '@/utils/mediaquery';
+import mediaquery from '@/utils/mediaquery';
 
 import Post from '@/components/Post';
 
@@ -11,7 +11,7 @@ type Props = {
 };
 
 const Cards = styled.ul(
-  mediaquey({
+  mediaquery({
     display: ['block', 'flex'],
     flexWrap: 'wrap',
   })
@@ -19,8 +19,10 @@ const Cards = styled.ul(
 
 export default function Posts({ posts }: Props) {
   return (
-    <Cards>
-      {posts && posts.map((post) => <Post key={post.slug} post={post} />)}
-    </Cards>
+    <>
+      <Cards>
+        {posts && posts.map((post) => <Post key={post.slug} post={post} />)}
+      </Cards>
+    </>
   );
 }

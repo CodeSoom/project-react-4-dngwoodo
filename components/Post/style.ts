@@ -15,7 +15,7 @@ const fadeIn = keyframes({
 export const Container = styled.li(
   mediaquery({
     width: ['100%', 'calc(50% - 10px)'],
-    '&:nth-child(odd)': {
+    '&:nth-of-type(odd)': {
       marginRight: ['0', '20px'],
     },
   })
@@ -36,13 +36,11 @@ export const Card = styled.a({
 
 export const CardTop = styled.div({
   position: 'relative',
-
   margin: '-30px 15px 0 15px',
   paddingBottom: '60%',
   borderRadius: '6px',
   zIndex: 1,
   '& div': {
-    overflow: 'hidden',
     borderRadius: '6px',
     boxShadow:
       '0 5px 15px -8px rgb(0 0 0 / 24%), 0 8px 10px -5px rgb(0 0 0 / 20%)',
