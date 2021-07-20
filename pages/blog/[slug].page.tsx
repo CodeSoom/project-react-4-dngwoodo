@@ -5,11 +5,19 @@ import matter from 'gray-matter';
 import marked from 'marked';
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 import PostType from '@/types/PostType';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import styled from '@emotion/styled';
 
 type Props = PostType & { content: string };
+
+const ImageContainer = styled(motion.div)({
+  width: '100%',
+  height: '300px',
+  position: 'relative',
+});
 
 export default function PostPage({ frontmatter, content }: Props) {
   const { title, date, coverImage } = frontmatter;
@@ -22,7 +30,14 @@ export default function PostPage({ frontmatter, content }: Props) {
       <div>
         <h1>{title}</h1>
         <div>Posted on {date}</div>
-        <Image src={coverImage} alt='' width={500} height={500} />
+        <ImageContainer layoutId='blog-thumbnail'>
+          <Image
+            alt='blog-thumbnail'
+            src={coverImage}
+            layout='fill'
+            objectFit='cover'
+          />
+        </ImageContainer>
         <div>
           {/* eslint-disable-next-line react/no-danger */}
           <div dangerouslySetInnerHTML={{ __html: marked(content) }} />
