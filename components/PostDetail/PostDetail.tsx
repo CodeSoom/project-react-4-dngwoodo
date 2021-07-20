@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import marked from 'marked';
+import { CgArrowLeftO, CgTimelapse } from 'react-icons/cg';
 import {
-  Container,
   ImageContainer,
   MetaData,
   MetaDataContainer,
@@ -10,6 +10,7 @@ import {
   Title,
   Top,
   TopContainer,
+  Content,
 } from './style';
 
 type Props = {
@@ -26,7 +27,7 @@ export default function PostDetail({
   content,
 }: Props) {
   return (
-    <Container>
+    <>
       <ImageContainer layoutId='blog-thumbnail'>
         <Image
           alt='blog-thumbnail'
@@ -39,14 +40,18 @@ export default function PostDetail({
       <TopContainer>
         <Top>
           <MetaDataContainer>
+            <Link href='/'>
+              <a href='replace'>
+                <CgArrowLeftO />
+              </a>
+            </Link>
             <MetaData>
               <p>{date}</p>
-              <p>5min read</p>
+              <div>
+                <CgTimelapse />
+                <p>5min read</p>
+              </div>
             </MetaData>
-
-            <Link href='/'>
-              <a href='replace'>Go Back</a>
-            </Link>
           </MetaDataContainer>
 
           <Title>
@@ -74,7 +79,7 @@ export default function PostDetail({
       </TopContainer>
 
       {/* eslint-disable-next-line react/no-danger */}
-      <p dangerouslySetInnerHTML={{ __html: marked(content) }} />
-    </Container>
+      <Content dangerouslySetInnerHTML={{ __html: marked(content) }} />
+    </>
   );
 }
