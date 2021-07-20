@@ -24,25 +24,27 @@ export default function PostPage({ frontmatter, content }: Props) {
 
   return (
     <>
-      <Link href='/'>
-        <a href='replace'>Go Back</a>
-      </Link>
+      <ImageContainer layoutId='blog-thumbnail'>
+        <Image
+          alt='blog-thumbnail'
+          src={coverImage}
+          layout='fill'
+          objectFit='cover'
+        />
+      </ImageContainer>
+
       <div>
-        <h1>{title}</h1>
-        <div>Posted on {date}</div>
-        <ImageContainer layoutId='blog-thumbnail'>
-          <Image
-            alt='blog-thumbnail'
-            src={coverImage}
-            layout='fill'
-            objectFit='cover'
-          />
-        </ImageContainer>
-        <div>
-          {/* eslint-disable-next-line react/no-danger */}
-          <div dangerouslySetInnerHTML={{ __html: marked(content) }} />
-        </div>
+        <div>React</div>
+        <p>{date}</p>
+        <Link href='/'>
+          <a href='replace'>Go Back</a>
+        </Link>
       </div>
+
+      <h1>{title}</h1>
+
+      {/* eslint-disable-next-line react/no-danger */}
+      <p dangerouslySetInnerHTML={{ __html: marked(content) }} />
     </>
   );
 }
