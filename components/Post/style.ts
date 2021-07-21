@@ -1,5 +1,6 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 
 import mediaquery from '@/utils/mediaquery';
 
@@ -21,7 +22,7 @@ export const Container = styled.li(
   })
 );
 
-export const Card = styled.a({
+export const Card = styled.div({
   display: 'flex',
   flexDirection: 'column',
   margin: '30px 0 60px 0',
@@ -34,11 +35,10 @@ export const Card = styled.a({
     '0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%)',
 });
 
-export const CardTop = styled.div({
+export const CardTop = styled(motion.div)({
   position: 'relative',
   margin: '-30px 15px 0 15px',
   paddingBottom: '60%',
-  borderRadius: '6px',
   zIndex: 1,
   '& div': {
     borderRadius: '6px',

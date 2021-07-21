@@ -2,7 +2,6 @@ import PostType from '@/types/PostType';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 
 import {
   Container,
@@ -25,24 +24,24 @@ export default function Post({ post }: Props) {
 
   return (
     <Container>
-      <Link href={`/blog/${slug}`} passHref>
-        <Card>
-          <CardTop>
-            <motion.div layoutId={`blog-thumbnail-${slug}`}>
+      <Link href={`/blog/${slug}`}>
+        <a href='replace'>
+          <Card>
+            <CardTop layoutId={`blog-thumbnail-${slug}`}>
               <Image src={coverImage} alt='thumbnail' layout='fill' />
-            </motion.div>
-            <ColoredShadow backgroundImage={coverImage} />
-          </CardTop>
-          <CardMiddle>
-            <h6>React</h6>
-            <h4>{title}</h4>
-            <p>{excerpt}</p>
-          </CardMiddle>
-          <CardBottom>
-            <span>{date}</span>
-            <span>5 min read</span>
-          </CardBottom>
-        </Card>
+              <ColoredShadow backgroundImage={coverImage} />
+            </CardTop>
+            <CardMiddle>
+              <h6>React</h6>
+              <h4>{title}</h4>
+              <p>{excerpt}</p>
+            </CardMiddle>
+            <CardBottom>
+              <span>{date}</span>
+              <span>5 min read</span>
+            </CardBottom>
+          </Card>
+        </a>
       </Link>
     </Container>
   );
