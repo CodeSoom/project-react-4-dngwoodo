@@ -28,7 +28,7 @@ export default function Post({ post }: Props) {
       <Link href={`/blog/${slug}`} passHref>
         <Card>
           <CardTop>
-            <motion.div layoutId='blog-thumbnail'>
+            <motion.div layoutId={`blog-thumbnail-${slug}`}>
               <Image src={coverImage} alt='thumbnail' layout='fill' />
             </motion.div>
             <ColoredShadow backgroundImage={coverImage} />

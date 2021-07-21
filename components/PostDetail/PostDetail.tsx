@@ -14,6 +14,7 @@ import {
 } from './style';
 
 type Props = {
+  slug: string;
   title: string;
   date: string;
   coverImage: string;
@@ -21,6 +22,7 @@ type Props = {
 };
 
 export default function PostDetail({
+  slug,
   title,
   date,
   coverImage,
@@ -28,7 +30,7 @@ export default function PostDetail({
 }: Props) {
   return (
     <>
-      <ImageContainer layoutId='blog-thumbnail'>
+      <ImageContainer layoutId={`blog-thumbnail-${slug}`}>
         <Image
           alt='blog-thumbnail'
           src={coverImage}

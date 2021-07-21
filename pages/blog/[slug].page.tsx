@@ -10,11 +10,12 @@ import PostDetail from '@/components/PostDetail';
 
 type Props = PostType & { content: string };
 
-export default function PostPage({ frontmatter, content }: Props) {
+export default function PostPage({ slug, frontmatter, content }: Props) {
   const { title, date, coverImage } = frontmatter;
 
   return (
     <PostDetail
+      slug={slug}
       title={title}
       date={date}
       coverImage={coverImage}
