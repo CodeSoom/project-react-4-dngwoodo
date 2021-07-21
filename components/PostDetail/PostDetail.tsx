@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import marked from 'marked';
 import { CgArrowLeftO, CgTimelapse } from 'react-icons/cg';
+
 import {
   ImageContainer,
   MetaData,
@@ -30,7 +31,20 @@ export default function PostDetail({
 }: Props) {
   return (
     <>
-      <ImageContainer layoutId={`blog-thumbnail-${slug}`}>
+      <ImageContainer
+        layoutId={`blog-thumbnail-${slug}`}
+        initial={{
+          width: '50%',
+          height: '475px',
+        }}
+        animate={{
+          width: '100%',
+          transition: {
+            duration: 1,
+            ease: [0.6, 0.01, -0.05, 0.9],
+          },
+        }}
+      >
         <Image
           alt='blog-thumbnail'
           src={coverImage}
