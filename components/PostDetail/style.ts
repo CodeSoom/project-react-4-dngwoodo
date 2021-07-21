@@ -9,6 +9,7 @@ export const ImageContainer = styled(motion.div)({
 });
 
 export const TopContainer = styled.div({
+  overflow: 'hidden',
   display: 'flex',
   margin: '0 auto',
   marginBottom: '40px',
@@ -24,7 +25,7 @@ export const Top = styled.div({
   fontWeight: 900,
 });
 
-export const MetaDataContainer = styled.div({
+export const MetaDataContainer = styled(motion.div)({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -54,14 +55,13 @@ export const MetaData = styled.div({
   },
 });
 
-export const Title = styled.h1({
+export const Title = styled(motion.h1)({
   marginBottom: '25px',
   marginLeft: '-5px',
   fontSize: '5rem',
-  wordBreak: 'break-all',
 });
 
-export const Tags = styled.ul({
+export const Tags = styled(motion.ul)({
   display: 'flex',
   marginLeft: '-10px',
   '& li': {
@@ -69,7 +69,7 @@ export const Tags = styled.ul({
   },
 });
 
-export const Content = styled.p({
+export const Content = styled(motion.p)({
   margin: '0 auto',
   maxWidth: '768px',
   padding: '0 16px',
