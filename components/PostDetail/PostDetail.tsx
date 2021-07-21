@@ -22,6 +22,8 @@ type Props = {
   content: string;
 };
 
+const transition = { duration: 1, ease: [0.6, 0.01, -0.05, 0.9] };
+
 export default function PostDetail({
   slug,
   title,
@@ -39,10 +41,7 @@ export default function PostDetail({
         }}
         animate={{
           width: '100%',
-          transition: {
-            duration: 1,
-            ease: [0.6, 0.01, -0.05, 0.9],
-          },
+          transition,
         }}
       >
         <Image
@@ -55,7 +54,17 @@ export default function PostDetail({
 
       <TopContainer>
         <Top>
-          <MetaDataContainer>
+          <MetaDataContainer
+            initial={{ opacity: 0, y: 20 }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              transition: {
+                ...transition,
+                delay: 0.6,
+              },
+            }}
+          >
             <Link href='/'>
               <a href='replace'>
                 <CgArrowLeftO />
@@ -70,14 +79,24 @@ export default function PostDetail({
             </MetaData>
           </MetaDataContainer>
 
-          <Title>
-            {title.split('').map((letter, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <span key={index}>{letter}</span>
-            ))}
+          <Title
+            initial={{ y: 400 }}
+            animate={{ y: 0, transition: { delay: 0.5 } }}
+          >
+            {title}
           </Title>
 
-          <Tags>
+          <Tags
+            initial={{ opacity: 0, y: 20 }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              transition: {
+                ...transition,
+                delay: 0.6,
+              },
+            }}
+          >
             <li>
               <span>React</span>
             </li>
@@ -95,7 +114,11 @@ export default function PostDetail({
       </TopContainer>
 
       {/* eslint-disable-next-line react/no-danger */}
-      <Content dangerouslySetInnerHTML={{ __html: marked(content) }} />
+      <Content
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { delay: 1 } }}
+        dangerouslySetInnerHTML={{ __html: marked(content) }}
+      />
     </>
   );
 }
