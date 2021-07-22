@@ -4,6 +4,9 @@ module.exports = {
     es2021: true,
     jest: true,
   },
+  globals: {
+    context: 'readonly',
+  },
   extends: [
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
@@ -69,6 +72,12 @@ module.exports = {
       { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
     ],
     'react/react-in-jsx-scope': 'off',
+    'jsx-a11y/label-has-associated-control': [
+      'off',
+      {
+        assert: 'both',
+      },
+    ],
   },
   ignorePatterns: ['plopfile.js', 'plop-templates'],
 };

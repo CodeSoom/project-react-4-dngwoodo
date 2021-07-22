@@ -1,6 +1,10 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
+export const Container = styled.div({
+  paddingTop: '112px',
+});
+
 export const ImageContainer = styled(motion.div)({
   position: 'relative',
   marginBottom: '50px',
