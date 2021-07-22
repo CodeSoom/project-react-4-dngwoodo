@@ -18,6 +18,7 @@ const Container = styled.div({
   maxWidth: '1300px',
   margin: '0 auto',
   padding: '20px',
+  paddingTop: '150px',
 });
 
 export default function Home({ posts }: Props) {

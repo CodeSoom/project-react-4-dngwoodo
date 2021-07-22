@@ -4,6 +4,7 @@ import marked from 'marked';
 import { CgArrowLeftO, CgTimelapse } from 'react-icons/cg';
 
 import {
+  Container,
   ImageContainer,
   MetaData,
   MetaDataContainer,
@@ -32,7 +33,7 @@ export default function PostDetail({
   content,
 }: Props) {
   return (
-    <>
+    <Container>
       <ImageContainer
         layoutId={`blog-thumbnail-${slug}`}
         initial={{
@@ -119,6 +120,6 @@ export default function PostDetail({
         animate={{ opacity: 1, transition: { delay: 1 } }}
         dangerouslySetInnerHTML={{ __html: marked(content) }}
       />
-    </>
+    </Container>
   );
 }
