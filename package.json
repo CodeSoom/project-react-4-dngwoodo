@@ -9,6 +9,7 @@
     "@reduxjs/toolkit": "^1.6.1",
     "@types/jest-plugin-context": "^2.9.4",
     "facepaint": "^1.2.1",
+    "firebase": "^8.6.8",
     "framer-motion": "^4.1.17",
     "gray-matter": "^4.0.3",
     "jest-plugin-context": "^2.9.0",
