@@ -11,7 +11,7 @@ describe('LoginContainer', () => {
   beforeEach(() => {
     dispatch.mockClear();
 
-    useDispatch.mockImplementation(() => dispatch);
+    (useDispatch as jest.Mock).mockImplementation(() => dispatch);
   });
 
   it('renders title, buttons', () => {

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import Login from './Login';
 
 jest.mock('react-redux');
+jest.mock('firebase/app');
 
 describe('Login', () => {
   const dispatch = jest.fn();
@@ -11,7 +12,7 @@ describe('Login', () => {
   beforeEach(() => {
     dispatch.mockClear();
 
-    useDispatch.mockImplementation(() => dispatch);
+    (useDispatch as jest.Mock).mockImplementation(() => dispatch);
   });
   it('renders title, buttons', () => {
     const { getByRole } = render(<Login />);
