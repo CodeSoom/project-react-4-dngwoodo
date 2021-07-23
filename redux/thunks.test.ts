@@ -9,7 +9,6 @@ const middlewares = [thunk];
 const mockStoreCreator = configureStore(middlewares);
 
 jest.mock('../services/auth-service');
-jest.mock('../services/firebase');
 
 describe('thunks', () => {
   describe('requestLogin', () => {
