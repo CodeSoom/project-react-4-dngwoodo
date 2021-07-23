@@ -3,9 +3,12 @@ import { DiCodeigniter } from 'react-icons/di';
 import { FiSearch } from 'react-icons/fi';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect } from 'react';
 
 import useAppSelector from '@/hooks/useAppSelector';
 import useAppDispatch from '@/hooks/useAppDispatch';
+import { authServiceOnAuthChange } from '@/services/auth-service';
+import { setUserEmail, setUserPhotoURL } from '../../redux/slice';
 import { requestLogin } from '../../redux/thunks';
 import { Container, LeftMenu, RightMenu, Search, User } from './style';
 
@@ -21,15 +24,21 @@ export const menus = [
 ];
 
 export default function Header() {
-  const { accessToken, email, photoURL } = useAppSelector(
-    (state) => state.user
-  );
+  const { email, photoURL } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const firstEmail = email?.split('@')[0];
 
   function handleClick(providerName: 'GitHub' | 'Google') {
     dispatch(requestLogin(providerName));
   }
+
+  useEffect(() => {
+    // user type 지정 필요. firebase.User | null
+    authServiceOnAuthChange((user: any) => {
+      dispatch(setUserEmail(user.email));
+      dispatch(setUserPhotoURL(user.photoURL));
+    });
+  }, [dispatch]);
 
   return (
     <Container>
@@ -59,7 +68,7 @@ export default function Header() {
             <input type='text' placeholder='Search' />
           </Search>
           <User>
-            {accessToken && photoURL ? (
+            {email && photoURL ? (
               <>
                 <div>
                   <Link href='/'>

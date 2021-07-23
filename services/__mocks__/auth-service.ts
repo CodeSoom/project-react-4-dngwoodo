@@ -9,3 +9,7 @@ export function authServiceLogout() {
 export function authServiceOnAuthChange() {
   return null;
 }
+
+export function persistAuthService() {
+  return null;
+}

@@ -1,3 +1,5 @@
+import firebase from 'firebase/app';
+
 import { firebaseAuth, githubProvider, googleProvider } from './firebase';
 
 function getProvider(providerName: string) {
@@ -14,6 +16,7 @@ function getProvider(providerName: string) {
 
 export function authServiceLogin(providerName: string) {
   const authProvider = getProvider(providerName);
+
   return firebaseAuth.signInWithPopup(authProvider);
 }
 
@@ -25,4 +28,8 @@ export function authServiceOnAuthChange(onUserChanged: any) {
   firebaseAuth.onAuthStateChanged((user) => {
     onUserChanged(user);
   });
+}
+
+export function persistAuthService() {
+  firebaseAuth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
 }
