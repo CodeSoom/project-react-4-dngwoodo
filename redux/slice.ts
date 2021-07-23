@@ -26,8 +26,11 @@ export const { reducer, actions } = createSlice({
         photoURL,
       };
     },
+    logout() {
+      return initialState;
+    },
   },
 });
 
 export default reducer;
-export const { setUserEmail, setUserPhotoURL } = actions;
+export const { setUserEmail, setUserPhotoURL, logout } = actions;
