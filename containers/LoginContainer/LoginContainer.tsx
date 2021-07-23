@@ -1,7 +1,7 @@
 import { MouseEvent } from 'react';
 
 import useAppDispatch from '@/hooks/useAppDispatch';
-import { requestLogin } from '../../redux/slice';
+import { requestLogin } from '../../redux/thunks';
 
 export default function LoginContainer() {
   const dispatch = useAppDispatch();
