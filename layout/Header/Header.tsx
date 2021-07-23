@@ -7,8 +7,11 @@ import { useEffect } from 'react';
 
 import useAppSelector from '@/hooks/useAppSelector';
 import useAppDispatch from '@/hooks/useAppDispatch';
-import { authServiceOnAuthChange } from '@/services/auth-service';
-import { setUserEmail, setUserPhotoURL } from '../../redux/slice';
+import {
+  authServiceLogout,
+  authServiceOnAuthChange,
+} from '@/services/auth-service';
+import { logout, setUserEmail, setUserPhotoURL } from '../../redux/slice';
 import { requestLogin } from '../../redux/thunks';
 import { Container, LeftMenu, RightMenu, Search, User } from './style';
 
@@ -32,11 +35,19 @@ export default function Header() {
     dispatch(requestLogin(providerName));
   }
 
+  function handleClickLogout() {
+    authServiceLogout();
+
+    dispatch(logout());
+  }
+
   useEffect(() => {
     // user type 지정 필요. firebase.User | null
     authServiceOnAuthChange((user: any) => {
-      dispatch(setUserEmail(user.email));
-      dispatch(setUserPhotoURL(user.photoURL));
+      if (user) {
+        dispatch(setUserEmail(user.email));
+        dispatch(setUserPhotoURL(user.photoURL));
+      }
     });
   }, [dispatch]);
 
@@ -77,7 +88,12 @@ export default function Header() {
                     </a>
                   </Link>
                 </div>
-                <div>{firstEmail}</div>
+                <div>
+                  {firstEmail}
+                  <button type='button' onClick={handleClickLogout}>
+                    Log Out
+                  </button>
+                </div>
               </>
             ) : (
               <ul>

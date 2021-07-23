@@ -1,4 +1,4 @@
-import reducer, { setUserEmail, setUserPhotoURL, User } from './slice';
+import reducer, { setUserEmail, setUserPhotoURL, logout, User } from './slice';
 
 describe('userReducer', () => {
   describe('setUserEmail', () => {
@@ -24,6 +24,22 @@ describe('userReducer', () => {
       const state = reducer(initialState, setUserPhotoURL('xxxx'));
 
       expect(state.photoURL).toBe('xxxx');
+    });
+  });
+
+  describe('logout', () => {
+    it("initializes user's state", () => {
+      const initialState: User = {
+        email: 'xxx@gmail.com',
+        photoURL: 'xxxx',
+      };
+
+      const state = reducer(initialState, logout());
+
+      expect(state).toEqual({
+        email: '',
+        photoURL: '',
+      });
     });
   });
 });
