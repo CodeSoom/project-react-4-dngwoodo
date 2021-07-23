@@ -6,8 +6,8 @@ import { requestLogin } from '../../redux/slice';
 export default function LoginContainer() {
   const dispatch = useAppDispatch();
 
-  async function handleClick(event: MouseEvent<HTMLButtonElement>) {
-    await dispatch(
+  function handleClick(event: MouseEvent<HTMLButtonElement>) {
+    dispatch(
       requestLogin(event.currentTarget?.textContent as 'GitHub' | 'Google')
     );
   }
