@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import Login from './Login';
 
 jest.mock('react-redux');
-jest.mock('firebase/app');
+jest.mock('../../services/auth-service');
 
 describe('Login', () => {
   const dispatch = jest.fn();

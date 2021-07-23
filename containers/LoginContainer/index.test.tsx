@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import LoginContainer from './LoginContainer';
 
 jest.mock('react-redux');
+jest.mock('../../services/auth-service');
 
 describe('LoginContainer', () => {
   const dispatch = jest.fn();
