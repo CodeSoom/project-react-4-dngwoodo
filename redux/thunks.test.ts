@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
 
 import { requestLogin } from './thunks';
-import { setAccessToken, setUserEmail, setUserPhotoURL } from './slice';
+import { setUserEmail, setUserPhotoURL } from './slice';
 
 const middlewares = [thunk];
 const mockStoreCreator = configureStore(middlewares);
@@ -20,9 +20,8 @@ describe('thunks', () => {
 
       const actions = store.getActions();
 
-      expect(actions[0]).toEqual(setAccessToken(undefined));
-      expect(actions[1]).toEqual(setUserEmail(undefined));
-      expect(actions[2]).toEqual(setUserPhotoURL(undefined));
+      expect(actions[0]).toEqual(setUserEmail(undefined));
+      expect(actions[1]).toEqual(setUserPhotoURL(undefined));
     });
   });
 });
