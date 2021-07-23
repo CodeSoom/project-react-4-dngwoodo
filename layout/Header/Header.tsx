@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { SiGithub, SiGoogle } from 'react-icons/si';
 import { DiCodeigniter } from 'react-icons/di';
 import { FiSearch } from 'react-icons/fi';
 import Link from 'next/link';
 import Image from 'next/image';
 
+import useAppSelector from '@/hooks/useAppSelector';
+import useAppDispatch from '@/hooks/useAppDispatch';
+import { requestLogin } from '../../redux/thunks';
 import { Container, LeftMenu, RightMenu, Search, User } from './style';
 
 export const menus = [
@@ -18,7 +21,15 @@ export const menus = [
 ];
 
 export default function Header() {
-  const [user, setUser] = useState<boolean>(false);
+  const { accessToken, email, photoURL } = useAppSelector(
+    (state) => state.user
+  );
+  const dispatch = useAppDispatch();
+  const firstEmail = email?.split('@')[0];
+
+  function handleClick(providerName: 'GitHub' | 'Google') {
+    dispatch(requestLogin(providerName));
+  }
 
   return (
     <Container>
@@ -48,33 +59,38 @@ export default function Header() {
             <input type='text' placeholder='Search' />
           </Search>
           <User>
-            {/* TODO: 로그인 후 user정보를 받아서 넣어줘야 함 */}
-            {user ? (
+            {accessToken && photoURL ? (
               <>
                 <div>
                   <Link href='/'>
                     <a href='/replace'>
-                      <Image
-                        src='/images/posts/img1.jpg'
-                        layout='fill'
-                        objectFit='cover'
-                      />
+                      <Image src={photoURL} layout='fill' objectFit='cover' />
                     </a>
                   </Link>
                 </div>
-                <div>Admin</div>
+                <div>{firstEmail}</div>
               </>
             ) : (
-              <Link href='/'>
-                <a
-                  href='replace'
-                  onClick={() => {
-                    setUser(true);
-                  }}
-                >
-                  Login
-                </a>
-              </Link>
+              <ul>
+                <li>
+                  <button
+                    type='button'
+                    onClick={() => handleClick('GitHub')}
+                    data-testid='github-auth-button'
+                  >
+                    <SiGithub />
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type='button'
+                    onClick={() => handleClick('Google')}
+                    data-testid='google-auth-button'
+                  >
+                    <SiGoogle />
+                  </button>
+                </li>
+              </ul>
             )}
           </User>
         </RightMenu>

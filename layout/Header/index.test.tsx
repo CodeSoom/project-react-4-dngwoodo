@@ -1,14 +1,25 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import { useSelector } from 'react-redux';
+import given from 'given2';
 
 import Header, { menus } from './Header';
 
-jest.mock('next/link', () => {
-  return ({ children }: { children: string }) => {
-    return children;
-  };
-});
+jest.mock('react-redux');
+jest.mock('../../services/auth-service');
 
 describe('Header', () => {
+  beforeEach(() => {
+    (useSelector as jest.Mock).mockImplementation((selector) =>
+      selector({
+        user: {
+          accessToken: given.accessToken,
+          email: given.email,
+          photoURL: given.photoURL,
+        },
+      })
+    );
+  });
+
   it('renders menu, input', () => {
     const { getByRole, getByPlaceholderText } = render(<Header />);
 
@@ -19,21 +30,29 @@ describe('Header', () => {
   });
 
   context('when logged in', () => {
-    it('renders avatar, user id', () => {
-      const { getByRole, container, getByText } = render(<Header />);
+    beforeEach(() => {
+      given('accessToken', () => 'ACCESS_TOKEN');
+      given('email', () => 'xxxx@gmail.com');
+      given('photoURL', () => '/images/posts/img1.jpg');
+    });
 
-      fireEvent.click(getByRole('link', { name: 'Login' }));
+    it('renders avatar, email', () => {
+      const { getByText } = render(<Header />);
 
-      expect(container).toContainHTML('<img');
-      expect(getByText('Admin')).toBeInTheDocument();
+      expect(getByText('xxxx')).toBeInTheDocument();
     });
   });
 
   context('when logged out', () => {
-    it('renders Login menu', () => {
-      const { getByRole } = render(<Header />);
+    beforeEach(() => {
+      given('accessToken', () => '');
+    });
 
-      expect(getByRole('link', { name: 'Login' })).toBeInTheDocument();
+    it('renders github, google auth login button', () => {
+      const { getByTestId } = render(<Header />);
+
+      expect(getByTestId('github-auth-button')).toBeInTheDocument();
+      expect(getByTestId('google-auth-button')).toBeInTheDocument();
     });
   });
 });

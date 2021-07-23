@@ -19,7 +19,7 @@ export const Container = styled.header({
     alignItems: 'center',
     width: '100%',
     maxWidth: '1300px',
-    '& ul': {
+    '& > ul': {
       display: 'flex',
       '& li': {
         borderRadius: '4px',
@@ -95,13 +95,19 @@ export const User = styled.div({
   '& div:nth-of-type(2)': {
     lineHeight: '40px',
   },
-  '& > a': {
-    display: 'block',
-    borderRadius: '4px',
-    padding: '12px 16px',
-    '&:hover': {
-      backgroundColor: 'crimson',
-      color: '#fff',
+  '& ul': {
+    display: 'flex',
+    '& li': {
+      '& button': {
+        all: 'unset',
+        borderRadius: '4px',
+        padding: '12px 16px',
+        cursor: 'pointer',
+        '&:hover': {
+          backgroundColor: 'crimson',
+          color: '#fff',
+        },
+      },
     },
   },
 });
