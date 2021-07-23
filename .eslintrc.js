@@ -6,6 +6,7 @@ module.exports = {
   },
   globals: {
     context: 'readonly',
+    given: 'readonly',
   },
   extends: [
     'plugin:react/recommended',
