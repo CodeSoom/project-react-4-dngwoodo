@@ -37,10 +37,10 @@ export default function HeaderContainer() {
   useEffect(() => {
     if (isShow) {
       document.addEventListener('click', handleClickCloseDropMenu);
-      return;
     }
 
-    document.removeEventListener('click', handleClickCloseDropMenu);
+    return () =>
+      document.removeEventListener('click', handleClickCloseDropMenu);
   }, [isShow, handleClickCloseDropMenu]);
 
   useEffect(() => {
