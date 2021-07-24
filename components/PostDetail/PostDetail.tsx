@@ -3,6 +3,7 @@ import Link from 'next/link';
 import marked from 'marked';
 import { CgArrowLeftO, CgTimelapse } from 'react-icons/cg';
 
+import Comment from '@/components/Comment';
 import {
   Container,
   ImageContainer,
@@ -120,6 +121,7 @@ export default function PostDetail({
         animate={{ opacity: 1, transition: { delay: 1 } }}
         dangerouslySetInnerHTML={{ __html: marked(content) }}
       />
+      <Comment />
     </Container>
   );
 }
