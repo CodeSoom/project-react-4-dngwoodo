@@ -1,9 +1,10 @@
 import { SiGithub, SiGoogle } from 'react-icons/si';
 import { DiCodeigniter } from 'react-icons/di';
 import { FiSearch } from 'react-icons/fi';
+import { MdArrowDropDown } from 'react-icons/md';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 import useAppSelector from '@/hooks/useAppSelector';
 import useAppDispatch from '@/hooks/useAppDispatch';
@@ -13,7 +14,15 @@ import {
 } from '@/services/auth-service';
 import { logout, setUserEmail, setUserPhotoURL } from '../../redux/slice';
 import { requestLogin } from '../../redux/thunks';
-import { Container, LeftMenu, RightMenu, Search, User } from './style';
+import {
+  Container,
+  LeftMenu,
+  RightMenu,
+  Search,
+  Login,
+  User,
+  DropDown,
+} from './style';
 
 export const menus = [
   {
@@ -27,9 +36,10 @@ export const menus = [
 ];
 
 export default function Header() {
-  const { email, photoURL } = useAppSelector((state) => state.user);
+  const { photoURL } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  const firstEmail = email?.split('@')[0];
+
+  const [isShow, setIsShow] = useState<boolean>(false);
 
   function handleClick(providerName: 'GitHub' | 'Google') {
     dispatch(requestLogin(providerName));
@@ -40,6 +50,23 @@ export default function Header() {
 
     dispatch(logout());
   }
+
+  const handleClickCloseDropMenu = useCallback(() => {
+    setIsShow(false);
+  }, []);
+
+  const handleClickShowDropMenu = useCallback(() => {
+    setIsShow(true);
+  }, []);
+
+  useEffect(() => {
+    if (isShow) {
+      document.addEventListener('click', handleClickCloseDropMenu);
+      return;
+    }
+
+    document.removeEventListener('click', handleClickCloseDropMenu);
+  }, [isShow, handleClickCloseDropMenu]);
 
   useEffect(() => {
     // user type 지정 필요. firebase.User | null
@@ -78,23 +105,32 @@ export default function Header() {
             <input type='checkbox' id='search-checkbox' />
             <input type='text' placeholder='Search' />
           </Search>
-          <User>
-            {email && photoURL ? (
-              <>
+          <Login>
+            {photoURL ? (
+              <User onClick={handleClickShowDropMenu}>
                 <div>
-                  <Link href='/'>
-                    <a href='/replace'>
-                      <Image src={photoURL} layout='fill' objectFit='cover' />
+                  <Image src={photoURL} layout='fill' objectFit='cover' />
+                </div>
+                <MdArrowDropDown />
+                <DropDown isShow={isShow}>
+                  <li>
+                    <a href='/profile' onClick={handleClickLogout}>
+                      Profile
                     </a>
-                  </Link>
-                </div>
-                <div>
-                  {firstEmail}
-                  <button type='button' onClick={handleClickLogout}>
-                    Log Out
-                  </button>
-                </div>
-              </>
+                  </li>
+                  <li>
+                    <a href='/dashboard' onClick={handleClickLogout}>
+                      Dashboard
+                    </a>
+                  </li>
+                  <li>
+                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                    <a href='#' onClick={handleClickLogout}>
+                      Log Out
+                    </a>
+                  </li>
+                </DropDown>
+              </User>
             ) : (
               <ul>
                 <li>
@@ -117,7 +153,7 @@ export default function Header() {
                 </li>
               </ul>
             )}
-          </User>
+          </Login>
         </RightMenu>
       </div>
     </Container>
