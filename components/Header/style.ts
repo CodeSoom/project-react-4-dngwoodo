@@ -114,45 +114,47 @@ export const User = styled.div({
   },
 });
 
-export const DropDown = styled.ul(({ isShow }: { isShow: boolean }) => ({
-  position: 'absolute',
-  top: '50px',
-  right: '22px',
-  display: isShow ? 'flex' : 'none',
-  flexDirection: 'column',
-  border: '1px solid #e6ebf5',
-  borderRadius: '4px',
-  padding: '8px 0',
-  background: '#fff',
-  boxShadow: '0 2px 12px 0 rgb(0 0 0 / 10%)',
-  lineHeight: '28px',
-  listStyle: 'none',
-  zIndex: 2000,
-  '&:after': {
-    content: '" "',
+export const DropDown = styled.ul(
+  ({ isShowDropDown }: { isShowDropDown: boolean }) => ({
     position: 'absolute',
-    top: '-7px',
-    right: '11px',
-    display: 'block',
-    borderRight: '6px',
-    borderBottom: '6px',
-    borderLeft: '6px',
-    borderColor: 'transparent',
-    borderBottomColor: '#fff',
-    borderStyle: 'solid',
-  },
-  '& li': {
-    padding: '0 16px',
-    color: '#9a9a9a',
-    cursor: 'pointer',
-    '&:hover': {
-      background: 'crimson',
-      borderRadius: '4px',
-      color: '#fff',
+    top: '50px',
+    right: '22px',
+    display: isShowDropDown ? 'flex' : 'none',
+    flexDirection: 'column',
+    border: '1px solid #e6ebf5',
+    borderRadius: '4px',
+    padding: '8px 0',
+    background: '#fff',
+    boxShadow: '0 2px 12px 0 rgb(0 0 0 / 10%)',
+    lineHeight: '28px',
+    listStyle: 'none',
+    zIndex: 2000,
+    '&:after': {
+      content: '" "',
+      position: 'absolute',
+      top: '-7px',
+      right: '11px',
+      display: 'block',
+      borderRight: '6px',
+      borderBottom: '6px',
+      borderLeft: '6px',
+      borderColor: 'transparent',
+      borderBottomColor: '#fff',
+      borderStyle: 'solid',
     },
-    '& a': {
-      fontSize: '.75rem',
-      fontWeight: 400,
+    '& li': {
+      padding: '0 16px',
+      color: '#9a9a9a',
+      cursor: 'pointer',
+      '&:hover': {
+        background: 'crimson',
+        borderRadius: '4px',
+        color: '#fff',
+      },
+      '& a': {
+        fontSize: '.75rem',
+        fontWeight: 400,
+      },
     },
-  },
-}));
+  })
+);

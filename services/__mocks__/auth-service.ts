@@ -6,7 +6,8 @@ export function authServiceLogout() {
   return null;
 }
 
-export function authServiceOnAuthChange() {
+export function authServiceOnAuthChange(callback: () => void) {
+  callback();
   return null;
 }
 

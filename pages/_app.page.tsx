@@ -4,7 +4,7 @@ import { AnimateSharedLayout } from 'framer-motion';
 import type { AppProps } from 'next/app';
 import { store } from '../redux/store';
 
-import Header from '../layout/Header';
+import Layout from '../layout/Layout';
 
 import '../styles/global.css';
 
@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <AnimateSharedLayout>
-        <Header />
+        <Layout />
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <Component {...pageProps} />
       </AnimateSharedLayout>
