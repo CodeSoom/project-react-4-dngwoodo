@@ -35,7 +35,6 @@ export const Title = styled.div({
 export const Comments = styled.ul({
   '& li': {
     display: 'flex',
-    alignItems: 'center',
     marginBottom: '40px',
   },
 });
@@ -50,8 +49,6 @@ export const UserImage = styled.div({
     borderRadius: '50%',
   },
 });
-
-export const CommentContainer = styled.div({});
 
 export const CommentTop = styled.div({
   marginBottom: '12px',
@@ -76,6 +73,7 @@ export const CommentBottom = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+  marginBottom: '12px',
   '& > div:nth-of-type(1)': {
     '& span': {
       marginRight: '16px',
@@ -95,29 +93,31 @@ export const CommentBottom = styled.div({
   },
 });
 
-export const CommentInput = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  '& textarea': {
-    marginBottom: '16px',
-    outline: 'none',
-    border: '1px solid rgb(233, 236, 239)',
-    borderRadius: '4px',
-    padding: '16px 16px 24px 16px',
-    resize: 'none',
-  },
-  '& button': {
-    alignSelf: 'flex-end',
-    padding: '8px 16px',
-    outline: 'none',
-    border: 'none',
-    borderRadius: '4px',
-    color: '#fff',
-    fontWeight: 900,
-    cursor: 'pointer',
-    backgroundColor: 'rgb(18, 184, 134)',
-    '&:focus, &:hover': {
-      backgroundColor: 'rgb(32, 201, 151)',
+export const CommentInput = styled.div(
+  ({ isShowReply = true }: { isShowReply?: boolean }) => ({
+    display: isShowReply ? 'flex' : 'none',
+    flexDirection: 'column',
+    '& textarea': {
+      marginBottom: '16px',
+      outline: 'none',
+      border: '1px solid rgb(233, 236, 239)',
+      borderRadius: '4px',
+      padding: '16px 16px 24px 16px',
+      resize: 'none',
     },
-  },
-});
+    '& button': {
+      alignSelf: 'flex-end',
+      padding: '8px 16px',
+      outline: 'none',
+      border: 'none',
+      borderRadius: '4px',
+      color: '#fff',
+      fontWeight: 900,
+      cursor: 'pointer',
+      backgroundColor: 'rgb(18, 184, 134)',
+      '&:focus, &:hover': {
+        backgroundColor: 'rgb(32, 201, 151)',
+      },
+    },
+  })
+);

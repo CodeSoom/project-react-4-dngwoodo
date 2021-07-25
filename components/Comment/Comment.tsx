@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { HiOutlineHeart } from 'react-icons/hi';
 import Image from 'next/image';
 
@@ -6,7 +7,6 @@ import {
   Title,
   Comments,
   UserImage,
-  CommentContainer,
   CommentTop,
   CommentMiddle,
   CommentBottom,
@@ -14,6 +14,8 @@ import {
 } from './style';
 
 export default function Comment() {
+  const [isShowReply, setIsShowReply] = useState<boolean>(false);
+
   return (
     <Container>
       <Title>
@@ -30,7 +32,7 @@ export default function Comment() {
               objectFit='cover'
             />
           </UserImage>
-          <CommentContainer>
+          <div>
             <CommentTop>
               <span>dngwoodo</span>﹒<span>5 min ago</span>
             </CommentTop>
@@ -42,7 +44,16 @@ export default function Comment() {
             </CommentMiddle>
             <CommentBottom>
               <div>
-                <span>Reply</span>
+                <span
+                  onClick={() => {
+                    setIsShowReply(!isShowReply);
+                  }}
+                  role='button'
+                  tabIndex={0}
+                  aria-hidden='true'
+                >
+                  Reply
+                </span>
                 <span>Like?</span>
               </div>
               <div>
@@ -50,7 +61,11 @@ export default function Comment() {
                 <span>24</span>
               </div>
             </CommentBottom>
-          </CommentContainer>
+            <CommentInput isShowReply={isShowReply}>
+              <textarea cols={30} rows={5} placeholder='Type a comment...' />
+              <button type='button'>Reply</button>
+            </CommentInput>
+          </div>
         </li>
       </Comments>
       <CommentInput>
