@@ -1,5 +1,7 @@
 export function savePost() {
-  return {};
+  return null;
 }
 
-export default {};
+export function readPost() {
+  return {};
+}
