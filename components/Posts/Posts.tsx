@@ -21,7 +21,8 @@ export default function Posts({ posts }: Props) {
   return (
     <>
       <Cards>
-        {posts && posts.map((post) => <Post key={post.slug} post={post} />)}
+        {/* TODO: post.createdAt으로 변경  */}
+        {posts && posts.map((post) => <Post key={post.title} post={post} />)}
       </Cards>
     </>
   );

@@ -6,11 +6,11 @@ describe('PostDetail', () => {
   it('renders date, title, tags, content', () => {
     const { getByText, container } = render(
       <PostDetail
-        slug=''
+        postId=''
         title='NextJS'
-        date='2021-07-20'
-        coverImage='/images/posts/img3.jpg'
-        content='NextJs Info'
+        createdAt='2021-07-20'
+        thumbnail='/images/posts/img1.jpg'
+        body='NextJs Info'
       />
     );
 

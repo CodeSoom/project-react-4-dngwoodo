@@ -1,14 +1,11 @@
-import fs from 'fs';
-import path from 'path';
-
 import styled from '@emotion/styled';
 import Head from 'next/head';
-import matter from 'gray-matter';
 
 import PostType from '@/types/PostType';
 import { GetStaticProps } from 'next';
 
 import Posts from '@/components/Posts';
+import { readAllPost } from '@/services/post-repository';
 
 export type Props = {
   posts: PostType[];
@@ -33,18 +30,7 @@ export default function Home({ posts }: Props) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const files = fs.readdirSync(path.join('posts'));
-
-  const posts = files.map((filename) => {
-    const slug = filename.replace('.md', '');
-    const markdownWithMeta = fs.readFileSync(
-      path.join('posts', filename),
-      'utf-8'
-    );
-    const { data: frontmatter } = matter(markdownWithMeta);
-
-    return { slug, frontmatter };
-  });
+  const posts = await readAllPost();
 
   return { props: { posts } };
 };
