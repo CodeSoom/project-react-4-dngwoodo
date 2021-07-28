@@ -67,7 +67,7 @@ export default function PostDetail({
               },
             }}
           >
-            <Link href='/'>
+            <Link href='/blog'>
               <a href='replace'>
                 <CgArrowLeftO />
               </a>
