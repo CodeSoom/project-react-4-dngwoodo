@@ -18,7 +18,7 @@ const Container = styled.div({
   paddingTop: '150px',
 });
 
-export default function Home({ posts }: Props) {
+export default function BlogPage({ posts }: Props) {
   return (
     <Container>
       <Head>
