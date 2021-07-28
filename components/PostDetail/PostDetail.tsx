@@ -17,26 +17,26 @@ import {
 } from './style';
 
 type Props = {
-  slug: string;
+  postId: string;
   title: string;
-  date: string;
-  coverImage: string;
-  content: string;
+  createdAt: string;
+  thumbnail: string;
+  body: string;
 };
 
 const transition = { duration: 1, ease: [0.6, 0.01, -0.05, 0.9] };
 
 export default function PostDetail({
-  slug,
+  postId,
   title,
-  date,
-  coverImage,
-  content,
+  createdAt,
+  thumbnail,
+  body,
 }: Props) {
   return (
     <Container>
       <ImageContainer
-        layoutId={`blog-thumbnail-${slug}`}
+        layoutId={`blog-thumbnail-${postId}`}
         initial={{
           width: '50%',
           height: '475px',
@@ -48,7 +48,7 @@ export default function PostDetail({
       >
         <Image
           alt='blog-thumbnail'
-          src={coverImage}
+          src={thumbnail}
           layout='fill'
           objectFit='cover'
         />
@@ -67,13 +67,13 @@ export default function PostDetail({
               },
             }}
           >
-            <Link href='/'>
+            <Link href='/blog'>
               <a href='replace'>
                 <CgArrowLeftO />
               </a>
             </Link>
             <MetaData>
-              <p>{date}</p>
+              <p>{createdAt}</p>
               <div>
                 <CgTimelapse />
                 <p>5min read</p>
@@ -119,7 +119,7 @@ export default function PostDetail({
       <Content
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { delay: 1 } }}
-        dangerouslySetInnerHTML={{ __html: marked(content) }}
+        dangerouslySetInnerHTML={{ __html: marked(body) }}
       />
       <Comment />
     </Container>

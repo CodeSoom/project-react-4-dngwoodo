@@ -1,11 +1,11 @@
 type PostType = {
-  slug: string;
-  frontmatter: {
-    title: string;
-    date: string;
-    excerpt: string;
-    coverImage: string;
-  };
+  postId: string;
+  thumbnail: string;
+  title: string;
+  body: string;
+  createdAt: string;
+  updatedAt: string;
+  like: number;
 };
 
 export default PostType;

@@ -1,7 +1,8 @@
+import PostType from '@/types/PostType';
+
 import { dbService } from './firebase';
 
 type Post = {
-  postId: string;
   title: string;
   body: string;
   like: number;
@@ -10,19 +11,36 @@ type Post = {
   updatedAt: string;
 };
 
-export function savePost(postData: Post) {
+export function createPost(postData: Post) {
   const newPostKey = dbService.ref().child('posts').push().key;
 
-  dbService.ref().update({ [`/posts/${newPostKey}`]: postData });
+  const newPostData = { ...postData, postId: newPostKey };
+
+  dbService.ref(`posts/${newPostKey}`).set(newPostData, (error) => {
+    console.error(error);
+  });
 }
 
-export function readPost(postId: string) {
+export async function readPost(postId: string): Promise<PostType[]> {
   const postRef = dbService.ref(`posts/${postId}`);
-  let result;
 
-  postRef.on('value', (snapshot) => {
-    result = snapshot.val();
-  });
+  const snapshot = await postRef.get();
 
-  return result;
+  return snapshot.val();
+}
+
+export async function readAllPost(): Promise<PostType[]> {
+  const postRef = dbService.ref('posts/');
+
+  const snapshot = await postRef.get();
+
+  return Object.values(snapshot.val());
+}
+
+export function updatePost(postData: Post & { postId: string }) {
+  dbService.ref().update({ [`/posts/${postData.postId}`]: postData });
+}
+
+export function deletePost(postId: string) {
+  dbService.ref().child(`posts/${postId}`).remove();
 }

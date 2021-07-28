@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 export const Container = styled.div({
   margin: '0 auto',
-  padding: '40px 16px',
+  padding: '40px 24px',
   maxWidth: '768px',
   fontFamily: 'Helvetica Neue',
 });

@@ -10,15 +10,9 @@ describe('Post', () => {
       <Post post={POSTS[0]} />
     );
 
-    expect(
-      getByRole('heading', { name: 'Writing Great Unit Tests' })
-    ).toBeInTheDocument();
+    expect(getByRole('heading', { name: 'NextJS' })).toBeInTheDocument();
     expect(container).toContainHTML('<img');
-    expect(getByText('March 12, 2021')).toBeInTheDocument();
-    expect(
-      getByText(
-        'We will look at 10 simple tips and tricks on writing unit tests in JavaScript'
-      )
-    ).toBeInTheDocument();
+    expect(getByText('2021-07-20')).toBeInTheDocument();
+    expect(getByText('NextJs Info')).toBeInTheDocument();
   });
 });

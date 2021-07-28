@@ -27,11 +27,11 @@ type Props = {
 export const MENUS = [
   {
     title: 'Blog',
-    link: '/',
+    link: '/blog',
   },
   {
     title: 'Projects',
-    link: '/',
+    link: '/projects',
   },
 ];
 

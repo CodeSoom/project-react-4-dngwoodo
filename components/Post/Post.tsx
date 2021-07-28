@@ -17,27 +17,24 @@ export type Props = {
 };
 
 export default function Post({ post }: Props) {
-  const {
-    slug,
-    frontmatter: { coverImage, date, title, excerpt },
-  } = post;
+  const { postId, thumbnail, title, body, createdAt } = post;
 
   return (
     <Container>
-      <Link href={`/blog/${slug}`}>
+      <Link href={`/blog/${postId}`}>
         <a href='replace'>
           <Card>
-            <CardTop layoutId={`blog-thumbnail-${slug}`}>
-              <Image src={coverImage} alt='thumbnail' layout='fill' />
-              <ColoredShadow backgroundImage={coverImage} />
+            <CardTop layoutId={`blog-thumbnail-${postId}`}>
+              <Image src={thumbnail} alt='thumbnail' layout='fill' />
+              <ColoredShadow backgroundImage={thumbnail} />
             </CardTop>
             <CardMiddle>
               <h6>React</h6>
               <h4>{title}</h4>
-              <p>{excerpt}</p>
+              <p>{body}</p>
             </CardMiddle>
             <CardBottom>
-              <span>{date}</span>
+              <span>{createdAt}</span>
               <span>5 min read</span>
             </CardBottom>
           </Card>
