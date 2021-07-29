@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import given from 'given2';
 
 import DROPDOWN_MENUS from '@/components/Header/index.test';
-import { logout } from '../../redux/slice';
+import { logout } from '../../redux/slices/userSlice';
 import HeaderContainer from './HeaderContainer';
 
 jest.mock('react-redux');

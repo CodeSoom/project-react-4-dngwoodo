@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
 
 import { requestLogin } from './thunks';
-import { setUserEmail, setUserPhotoURL } from './slice';
+import { setUserEmail, setUserPhotoURL } from './slices/userSlice';
 
 const middlewares = [thunk];
 const mockStoreCreator = configureStore(middlewares);
