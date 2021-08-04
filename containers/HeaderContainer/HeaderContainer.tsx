@@ -15,7 +15,6 @@ import {
 } from '../../redux/slices/userSlice';
 
 export default function HeaderContainer() {
-  const { mode } = useAppSelector((state) => state.loginForm);
   const { uid, photoURL } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
@@ -68,7 +67,6 @@ export default function HeaderContainer() {
 
   return (
     <Header
-      mode={mode}
       uid={uid}
       photoURL={photoURL}
       isShowDropDown={isShow}

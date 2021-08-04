@@ -22,7 +22,6 @@ type Props = {
   photoURL: string;
   isShowDropDown: boolean;
   isShowModal: boolean;
-  mode: 'login' | 'sign-up' | 'forgot-password';
   onClickLogout: () => void;
   onClickShowDropMenu: () => void;
   onClickShowModal: () => void;
@@ -41,28 +40,11 @@ export const MENUS = [
   },
 ];
 
-function Form({ mode }: { mode: 'login' | 'sign-up' | 'forgot-password' }) {
-  if (mode === 'login') {
-    return <LoginFormContainer />;
-  }
-
-  if (mode === 'sign-up') {
-    return <div>signup</div>;
-  }
-
-  if (mode === 'forgot-password') {
-    return <div>forgot-password</div>;
-  }
-
-  return null;
-}
-
 export default function Header({
   uid,
   photoURL,
   isShowDropDown,
   isShowModal,
-  mode,
   onClickLogout,
   onClickShowDropMenu,
   onClickShowModal,
@@ -127,7 +109,7 @@ export default function Header({
         {!uid && isShowModal && (
           <Portal>
             <Modal onClickHideModal={onClickHideModal}>
-              <Form mode={mode} />
+              <LoginFormContainer />
             </Modal>
           </Portal>
         )}

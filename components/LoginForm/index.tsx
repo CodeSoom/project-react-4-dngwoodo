@@ -1,3 +1,3 @@
-describe('LoginForm', () => {
-  it('renders ...', () => {});
-});
+import LoginForm from './LoginForm';
+
+export default LoginForm;
