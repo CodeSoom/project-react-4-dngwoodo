@@ -12,7 +12,11 @@ export default function Modal({ onClickHideModal, children }: Props) {
   return (
     <ModalOverlay>
       <ModalWrapper>
-        <ModalClose type='button' onClick={onClickHideModal}>
+        <ModalClose
+          type='button'
+          onClick={onClickHideModal}
+          data-testid='modal-close-button'
+        >
           <IoClose />
         </ModalClose>
         {children}

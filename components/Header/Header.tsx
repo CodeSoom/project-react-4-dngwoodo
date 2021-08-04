@@ -84,7 +84,10 @@ export default function Header({
                   <Image src={photoURL} layout='fill' objectFit='cover' />
                 </div>
                 <MdArrowDropDown />
-                <DropDown isShowDropDown={isShowDropDown}>
+                <DropDown
+                  isShowDropDown={isShowDropDown}
+                  data-testid='dropdown-menu'
+                >
                   <li>
                     <a href='/profile'>Profile</a>
                   </li>
