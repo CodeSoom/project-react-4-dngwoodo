@@ -1,13 +1,15 @@
 import reducer, { LoginFormMode, setLoginFormMode } from '.';
 
 describe('loginFormSlice', () => {
-  describe('changes mode', () => {
-    const initialState: LoginFormMode = {
-      mode: 'login',
-    };
+  describe('setLoginFormMode', () => {
+    it('changes mode', () => {
+      const initialState: LoginFormMode = {
+        mode: 'login',
+      };
 
-    const state = reducer(initialState, setLoginFormMode('sign-up'));
+      const state = reducer(initialState, setLoginFormMode('sign-up'));
 
-    expect(state.mode).toBe('login');
+      expect(state.mode).toBe('sign-up');
+    });
   });
 });
