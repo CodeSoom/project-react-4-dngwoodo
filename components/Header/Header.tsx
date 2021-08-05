@@ -5,6 +5,7 @@ import { FiSearch } from 'react-icons/fi';
 import { MdArrowDropDown } from 'react-icons/md';
 
 import LoginFormContainer from '@/containers/LoginFormContainer';
+import MENUS from '@/fixtures/menus';
 import {
   Container,
   LeftMenu,
@@ -29,17 +30,6 @@ type Props = {
   // eslint-disable-next-line no-unused-vars
 };
 
-export const MENUS = [
-  {
-    title: 'Blog',
-    link: '/blog',
-  },
-  {
-    title: 'Projects',
-    link: '/projects',
-  },
-];
-
 export default function Header({
   uid,
   photoURL,
@@ -56,7 +46,7 @@ export default function Header({
         <LeftMenu>
           <Link href='/'>
             <a href='replace'>
-              <DiCodeigniter />
+              <DiCodeigniter data-testid='logo' />
             </a>
           </Link>
         </LeftMenu>
@@ -81,7 +71,12 @@ export default function Header({
             {photoURL ? (
               <User onClick={onClickShowDropMenu} data-testid='user-menu'>
                 <div>
-                  <Image src={photoURL} layout='fill' objectFit='cover' />
+                  <Image
+                    src={photoURL}
+                    layout='fill'
+                    objectFit='cover'
+                    alt='user'
+                  />
                 </div>
                 <MdArrowDropDown />
                 <DropDown
