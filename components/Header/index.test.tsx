@@ -1,92 +1,92 @@
+import MENUS from '@/fixtures/menus';
 import { fireEvent, render } from '@testing-library/react';
+import given from 'given2';
 
-import Header, { MENUS } from '@/components/Header/Header';
+import Header from './Header';
 
-const DROPDOWN_MENUS = ['Profile', 'Dashboard', 'Log Out'];
-
-export default DROPDOWN_MENUS;
+jest.mock('@/services/auth-service');
 
 describe('Header', () => {
-  const handleClickLogin = jest.fn();
   const handleClickLogout = jest.fn();
   const handleClickShowDropMenu = jest.fn();
+  const handleClickShowModal = jest.fn();
+  const handleClickHideModal = jest.fn();
 
-  function renderHeader({
-    isShowDropDown,
-    photoURL,
-  }: {
-    isShowDropDown: boolean;
-    photoURL: string;
-  }) {
+  function renderHeader() {
     return render(
       <Header
-        isShowDropDown={isShowDropDown}
-        photoURL={photoURL}
-        onClickLogin={handleClickLogin}
+        uid={given.uid}
+        photoURL={given.photoURL}
+        isShowDropDown={false}
+        isShowModal={false}
         onClickLogout={handleClickLogout}
         onClickShowDropMenu={handleClickShowDropMenu}
+        onClickShowModal={handleClickShowModal}
+        onClickHideModal={handleClickHideModal}
       />
     );
   }
 
-  it('renders menu, input', () => {
-    const { getByRole, getByPlaceholderText } = renderHeader({
-      photoURL: '',
-      isShowDropDown: false,
-    });
+  it('renders logo, menu', () => {
+    const { getByTestId, getByRole } = renderHeader();
+
+    expect(getByTestId('logo')).toBeInTheDocument();
 
     MENUS.forEach(({ title }) => {
-      expect(getByRole('link', { name: title })).toBeInTheDocument();
+      expect(getByRole('link', { name: title }));
     });
-    expect(getByPlaceholderText('Search')).toBeInTheDocument();
   });
 
   context('when logged in', () => {
-    it('renders avatar, dropdown menu', () => {
-      const { container, getByRole } = renderHeader({
-        photoURL: '/images/posts/img1.png',
-        isShowDropDown: true,
-      });
+    beforeEach(() => {
+      given('uid', () => 'xxxx');
+      given('photoURL', () => '/images/photos/xxx.png');
+    });
 
-      expect(container).toContainHTML('<img');
-      DROPDOWN_MENUS.forEach((link) => {
-        expect(getByRole('link', { name: link })).toBeInTheDocument();
+    it('renders avatar, dropdown-menu', () => {
+      const { getByText } = renderHeader();
+
+      expect(document.querySelector('img[alt="user"]')).toBeInTheDocument(); // data-testid를 써도 상관X
+      ['Profile', 'Dashboard', 'Log Out'].forEach((menu) => {
+        expect(getByText(menu)).toBeInTheDocument();
       });
     });
 
-    it("listens 'Log Out' click event", () => {
-      const { getByRole } = renderHeader({
-        photoURL: '/images/posts/img1.png',
-        isShowDropDown: true,
-      });
+    it("listens 'user-menu' click event", () => {
+      const { getByTestId } = renderHeader();
 
-      fireEvent.click(getByRole('link', { name: 'Log Out' }));
+      fireEvent.click(getByTestId('user-menu'));
+
+      expect(handleClickShowDropMenu).toBeCalled();
+    });
+
+    it("listens 'Log Out' click event", () => {
+      const { getByText } = renderHeader();
+
+      fireEvent.click(getByText('Log Out'));
 
       expect(handleClickLogout).toBeCalled();
     });
   });
 
   context('when logged out', () => {
-    it('renders github, google auth login button', () => {
-      const { getByTestId } = renderHeader({
-        photoURL: '',
-        isShowDropDown: false,
-      });
-
-      expect(getByTestId('github-auth-button')).toBeInTheDocument();
-      expect(getByTestId('google-auth-button')).toBeInTheDocument();
+    beforeEach(() => {
+      given('uid', () => '');
+      given('photoURL', () => '');
     });
 
-    it("listens 'auth login button' click event", () => {
-      const { getByTestId } = renderHeader({
-        photoURL: '',
-        isShowDropDown: false,
-      });
+    it("renders 'Login' button", () => {
+      const { getByRole } = renderHeader();
 
-      fireEvent.click(getByTestId('github-auth-button'));
-      fireEvent.click(getByTestId('google-auth-button'));
+      expect(getByRole('button', { name: 'Login' })).toBeInTheDocument();
+    });
 
-      expect(handleClickLogin).toBeCalledTimes(2);
+    it("listens 'Login' click event", () => {
+      const { getByRole } = renderHeader();
+
+      fireEvent.click(getByRole('button', { name: 'Login' }));
+
+      expect(handleClickShowModal).toBeCalled();
     });
   });
 });

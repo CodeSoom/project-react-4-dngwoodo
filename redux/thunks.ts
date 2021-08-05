@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
 import { authServiceLogin, persistAuthService } from '@/services/auth-service';
-import { setUserEmail, setUserPhotoURL } from './slice';
+import { setUserEmail, setUserPhotoURL } from './slices/userSlice';
 
 export function requestLogin(providerName: 'GitHub' | 'Google') {
   return async (dispatch: Dispatch) => {

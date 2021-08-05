@@ -1,13 +1,10 @@
 import { fireEvent, render } from '@testing-library/react';
 import { useDispatch, useSelector } from 'react-redux';
 import given from 'given2';
-
-import DROPDOWN_MENUS from '@/components/Header/index.test';
-import { logout } from '../../redux/slice';
 import HeaderContainer from './HeaderContainer';
 
 jest.mock('react-redux');
-jest.mock('../../services/auth-service');
+jest.mock('@/services/auth-service');
 
 describe('HeaderContainer', () => {
   const dispatch = jest.fn();
@@ -16,52 +13,90 @@ describe('HeaderContainer', () => {
     dispatch.mockClear();
 
     (useDispatch as jest.Mock).mockImplementation(() => dispatch);
-
     (useSelector as jest.Mock).mockImplementation((selector) =>
-      selector({ user: { photoURL: given.photoURL } })
+      selector({
+        user: given.user,
+      })
     );
   });
 
   context('when logged in', () => {
     beforeEach(() => {
-      given('photoURL', () => '/images/posts/img1.jpg');
+      given('user', () => ({
+        uid: 'xxxx',
+        email: 'xxxx@gmail.com',
+        photoURL: '/images/photos/xxxx.png',
+      }));
     });
 
     it("listens 'Log Out' click event", () => {
-      const { getByTestId, getByRole } = render(<HeaderContainer />);
+      const { getByText } = render(<HeaderContainer />);
 
-      fireEvent.click(getByTestId('user-menu'));
-      fireEvent.click(getByRole('link', { name: 'Log Out' }));
+      fireEvent.click(getByText('Log Out'));
 
-      expect(dispatch).toBeCalledWith(logout());
+      expect(dispatch).toBeCalledWith({
+        type: 'user/logout',
+      });
     });
 
-    it("listens 'user-menu' click event", () => {
-      const { getByTestId, getByRole } = render(<HeaderContainer />);
+    it("listens 'avatar' click event", () => {
+      const { getByTestId } = render(<HeaderContainer />);
+
+      expect(getByTestId('dropdown-menu')).toHaveStyle('display: none');
 
       fireEvent.click(getByTestId('user-menu'));
 
-      DROPDOWN_MENUS.forEach((link) => {
-        expect(getByRole('link', { name: link })).toBeInTheDocument();
-      });
+      expect(getByTestId('dropdown-menu')).toHaveStyle('display: flex');
+    });
 
-      // TODO: useEffect 부분을 어떻게 테스트 해야 될지 모르겠음. document.addEventListener('click', handleClickCloseDropDownMenu);
-      // fireEvent.click(getByTestId('user-menu'));
+    it("listens 'document' click event", () => {
+      const { getByTestId } = render(<HeaderContainer />);
 
-      // DROPDOWN_MENUS.forEach((link) => {
-      //   expect(getByRole('link', { name: link })).not.toBeInTheDocument();
-      // });
+      expect(getByTestId('dropdown-menu')).toHaveStyle('display: none');
+
+      fireEvent.click(getByTestId('user-menu'));
+
+      expect(getByTestId('dropdown-menu')).toHaveStyle('display: flex');
+
+      fireEvent.click(document);
+
+      expect(getByTestId('dropdown-menu')).toHaveStyle('display: none');
     });
   });
 
   context('when logged out', () => {
-    it("listens 'auth login button' click event", () => {
-      const { getByTestId } = render(<HeaderContainer />);
+    beforeEach(() => {
+      given('user', () => ({
+        uid: '',
+        email: '',
+        photoURL: '',
+      }));
 
-      fireEvent.click(getByTestId('github-auth-button'));
-      fireEvent.click(getByTestId('google-auth-button'));
+      const modal = document.createElement('div');
+      modal.setAttribute('id', 'modal');
+      document.body.appendChild(modal);
+    });
 
-      expect(dispatch).toBeCalled();
+    it("listens 'Login' click event", () => {
+      const { getByRole } = render(<HeaderContainer />);
+
+      fireEvent.click(getByRole('button', { name: 'Login' }));
+
+      expect(getByRole('heading', { name: 'Welcome' })).toBeInTheDocument();
+    });
+
+    it("listens 'modal-close-button' click event", () => {
+      const { getByTestId, queryByRole } = render(<HeaderContainer />);
+
+      fireEvent.click(queryByRole('button', { name: 'Login' })!);
+
+      expect(queryByRole('heading', { name: 'Welcome' })).toBeInTheDocument();
+
+      fireEvent.click(getByTestId('modal-close-button'));
+
+      expect(
+        queryByRole('heading', { name: 'Welcome' })
+      ).not.toBeInTheDocument();
     });
   });
 });

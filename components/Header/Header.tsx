@@ -3,8 +3,9 @@ import Image from 'next/image';
 import { DiCodeigniter } from 'react-icons/di';
 import { FiSearch } from 'react-icons/fi';
 import { MdArrowDropDown } from 'react-icons/md';
-import { SiGithub, SiGoogle } from 'react-icons/si';
 
+import LoginFormContainer from '@/containers/LoginFormContainer';
+import MENUS from '@/fixtures/menus';
 import {
   Container,
   LeftMenu,
@@ -14,33 +15,30 @@ import {
   User,
   DropDown,
 } from './style';
+import Portal from '../Portal';
+import Modal from '../Modal';
 
 type Props = {
-  isShowDropDown: boolean;
+  uid: string;
   photoURL: string;
-  // eslint-disable-next-line no-unused-vars
-  onClickLogin: (providerName: 'GitHub' | 'Google') => void;
+  isShowDropDown: boolean;
+  isShowModal: boolean;
   onClickLogout: () => void;
   onClickShowDropMenu: () => void;
+  onClickShowModal: () => void;
+  onClickHideModal: () => void;
+  // eslint-disable-next-line no-unused-vars
 };
 
-export const MENUS = [
-  {
-    title: 'Blog',
-    link: '/blog',
-  },
-  {
-    title: 'Projects',
-    link: '/projects',
-  },
-];
-
 export default function Header({
-  isShowDropDown,
+  uid,
   photoURL,
-  onClickLogin,
+  isShowDropDown,
+  isShowModal,
   onClickLogout,
   onClickShowDropMenu,
+  onClickShowModal,
+  onClickHideModal,
 }: Props) {
   return (
     <Container>
@@ -48,7 +46,7 @@ export default function Header({
         <LeftMenu>
           <Link href='/'>
             <a href='replace'>
-              <DiCodeigniter />
+              <DiCodeigniter data-testid='logo' />
             </a>
           </Link>
         </LeftMenu>
@@ -73,10 +71,18 @@ export default function Header({
             {photoURL ? (
               <User onClick={onClickShowDropMenu} data-testid='user-menu'>
                 <div>
-                  <Image src={photoURL} layout='fill' objectFit='cover' />
+                  <Image
+                    src={photoURL}
+                    layout='fill'
+                    objectFit='cover'
+                    alt='user'
+                  />
                 </div>
                 <MdArrowDropDown />
-                <DropDown isShowDropDown={isShowDropDown}>
+                <DropDown
+                  isShowDropDown={isShowDropDown}
+                  data-testid='dropdown-menu'
+                >
                   <li>
                     <a href='/profile'>Profile</a>
                   </li>
@@ -92,29 +98,19 @@ export default function Header({
                 </DropDown>
               </User>
             ) : (
-              <ul>
-                <li>
-                  <button
-                    type='button'
-                    onClick={() => onClickLogin('GitHub')}
-                    data-testid='github-auth-button'
-                  >
-                    <SiGithub />
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type='button'
-                    onClick={() => onClickLogin('Google')}
-                    data-testid='google-auth-button'
-                  >
-                    <SiGoogle />
-                  </button>
-                </li>
-              </ul>
+              <button type='button' onClick={onClickShowModal}>
+                Login
+              </button>
             )}
           </Login>
         </RightMenu>
+        {!uid && isShowModal && (
+          <Portal>
+            <Modal onClickHideModal={onClickHideModal}>
+              <LoginFormContainer />
+            </Modal>
+          </Portal>
+        )}
       </div>
     </Container>
   );
